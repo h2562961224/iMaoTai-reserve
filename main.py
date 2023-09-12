@@ -28,7 +28,9 @@ s_title = '茅台预约成功'
 s_content = ""
 
 for section in configs.sections():
+    mobile = privateCrypt.decrypt_aes_ecb(section, aes_key)
     if (configs.get(section, 'enddate') != 9) and (TODAY > configs.get(section, 'enddate')):
+        s_content = s_content + f"{mobile}：token即将过期！！！" + "\n"
         continue
     mobile = privateCrypt.decrypt_aes_ecb(section, aes_key)
     province = configs.get(section, 'province')
