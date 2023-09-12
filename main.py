@@ -14,14 +14,6 @@ logging.basicConfig(level=logging.INFO,
                     stream=sys.stdout,
                     datefmt=DATE_FORMAT)
 
-print(r'''
-**************************************
-    欢迎使用i茅台自动预约工具
-    作者GitHub：https://github.com/3 9 7 1 7 9 4 5 9
-    vx：L 3 9 7 1 7 9 4 5 9 加好友注明来意
-**************************************
-''')
-
 process.get_current_session_id()
 
 # 校验配置文件是否存在
@@ -67,7 +59,6 @@ for section in configs.sections():
             shop_info = source_data.get(str(max_shop_id))
             title = config.ITEM_MAP.get(item)
             shopInfo = f'商品:{title};门店:{shop_info["name"]}'
-            logging.info(shopInfo)
             reservation_params = process.act_params(max_shop_id, item)
             # 核心预约步骤
             r_success, r_content = process.reservation(reservation_params, mobile)

@@ -3,6 +3,7 @@ import os
 import config as cf
 import process
 import privateCrypt
+import datetime
 
 config = configparser.ConfigParser()  # 类实例化
 
@@ -25,34 +26,17 @@ config.read(path, encoding="utf-8")
 sections = config.sections()
 
 
-def get_location():
-    while 1:
-        location = input(f"请输入精确小区位置，例如[小区名称]，为你自动预约附近的门店:").strip()
-        selects = process.select_geo(location)
-
-        a = 0
-        for item in selects:
-            formatted_address = item['formatted_address']
-            province = item['province']
-            print(f'{a} : [地区:{province},位置:{formatted_address}]')
-            a += 1
-        user_select = input(f"请选择位置序号,重新输入请输入[-]:").strip()
-        if user_select == '-':
-            continue
-        select = selects[int(user_select)]
-        formatted_address = select['formatted_address']
-        province = select['province']
-        print(f'已选择 地区:{province},[{formatted_address}]附近的门店')
-        return select
-
-
 if __name__ == '__main__':
 
     aes_key = privateCrypt.get_aes_key()
 
     while 1:
         process.init_headers()
-        location_select: dict = get_location()
+        location_select: dict = {
+            "province": "浙江省",
+            "city": "杭州市",
+            "location": "119.992931,30.228964"
+        }
         province = location_select['province']
         city = location_select['city']
         location: str = location_select['location']
@@ -62,7 +46,8 @@ if __name__ == '__main__':
         code = input(f"输入 [{mobile}] 验证码[1234]:").strip()
         token, userId = process.login(mobile, code)
 
-        endDate = input(f"输入 [{mobile}] 截止日期(必须是YYYYMMDD,20230819)，如果不设置截止，请输入9：").strip()
+        day_20_later = datetime.datetime.now() + datetime.timedelta(days=20)
+        endDate = day_20_later.strftime("%Y%m%d")
 
         # 为了增加辨识度，这里做了隐私处理，不参与任何业务逻辑
         hide_mobile = mobile.replace(mobile[3:7], '****')

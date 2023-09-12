@@ -22,13 +22,6 @@ PUSH_TOKEN = os.environ.get("PUSHPLUS_KEY")
 
 
 '''
-*********** 地图配置 ***********
-获取地点信息,这里用的高德api,需要自己去高德开发者平台申请自己的key
-'''
-AMAP_KEY = os.environ.get("GAODE_KEY")
-
-
-'''
 *********** 个人账户认证配置 ***********
 个人用户 credentials 路径
 不配置,使用默认路径,在项目目录中;如果需要配置,你自己应该也会配置路径
@@ -45,7 +38,7 @@ key用了SHA-256转化,所以这里可以配置任意字符串,不用遵守AES�
 如果不会配置环境变量(建议学习)、不care安全性、非开源运行,你可以在这里明文指定,eg:PRIVATE_AES_KEY = '666666'
 ps:本来是写了判断是否配置密钥，可以自由选择明文保存的方式。但是还是为了安全性，限制了必须使用AES加密。哪怕是明文密钥。
 '''
-PRIVATE_AES_KEY = os.environ.get("PRIVATE_AES_KEY")
+PRIVATE_AES_KEY = os.environ.get("MT_PRIVATE_AES_KEY")
 
 
 '''
@@ -56,4 +49,4 @@ _RULES = {
     'MIN_DISTANCE': 0,   # 预约你的位置最近的门店
     'MAX_SALES': 1,      # 预约本市出货量最大的门店
 }
-RESERVE_RULE = 0         # 在这里配置你的规则，只能选择其中一个
+RESERVE_RULE = 1         # 在这里配置你的规则，只能选择其中一个
